@@ -2,10 +2,10 @@
 class Area_Info {
 /* --------------------------BASIC------------------------- */
     var $area_name;
-    var $start_addr = "100";
-    var $end_addr = "200";
+    var $network_segment;
+    var $start_IP;
+    var $end_IP;
 /* --------------------------EXTEND------------------------- */
-    var $netmask;
     var $lease_time;
     var $interface;
     var $router;
@@ -20,6 +20,9 @@ class Area_Info {
 
     function getMembers() {
         return get_class_vars(__CLASS__);
+    }
+    function getMembers_value() {
+        return get_object_vars($this);
     }
 
     function getIt($area_name) {
@@ -44,6 +47,7 @@ class Area_Info {
 
     function saveIt() {
         global $conf;
+        $area_name = $this->area_name;
         $l_r = new Redis();
         $l_r->connect($conf['redis_host'], $conf['redis_port'], $conf['redis_timeout']);
         if( !$l_r->rPush(constant("AREAS_TABLE"), $area_name) ) {
@@ -51,7 +55,7 @@ class Area_Info {
                   Please verify your redis server is runing, and can connect it.");
             exit;
         }
-        if ( !$l_r->hMset('H_' . $area_name . '_INFO', $this->getMembers()) ) {
+        if ( !$l_r->hMset('H_' . $area_name . '_INFO', $this->getMembers_value()) ) {
             die ("Write area_info to H_ " . $area_name . "_INFO failed,\n
                   Verify your redis server.");
             exit;
