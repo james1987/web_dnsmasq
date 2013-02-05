@@ -20,7 +20,7 @@ $(document).ready(function(){
         },
         function(data,status){
             if ("success" == status) {
-//                window.location.href="/";
+                window.location.href="/";
             }
             else {
                 alert("Not OK!");

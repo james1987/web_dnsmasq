@@ -20,8 +20,18 @@
     </div><!-- /header -->
 
     <div data-role="content">   
-        <h1>概况：</h1>
-        <p>一切正常！</p>      
+        <h3>概况：</h3>
+        <p>一切正常！</p>
+<pre>
+<?php
+var_dump(get_areas());
+foreach(get_areas() as $area) {
+$AI = new Area_Info();
+$AI->getIt($area);
+var_dump($AI);
+}
+?>
+</pre>
         <p><a href="#create_panel" data-role="button" data-rel="dialog" data-transition="pop">创建作用域</a></p>
     </div><!-- /content -->
 

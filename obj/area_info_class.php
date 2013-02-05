@@ -29,7 +29,7 @@ class Area_Info {
         global $conf;
         $l_r = new Redis();
         $l_r->connect($conf['redis_host'], $conf['redis_port'], $conf['redis_timeout']);
-        $elements = l_r.hGetAll('H_' . $area_name . '_INFO');
+        $elements = $l_r->hGetAll('H_' . $area_name . '_INFO');
         $l_r->close();
         if ( Null == $elements ) {
             die ("The area " . $area_name . "don't exist in this system,\n
@@ -50,11 +50,14 @@ class Area_Info {
         $area_name = $this->area_name;
         $l_r = new Redis();
         $l_r->connect($conf['redis_host'], $conf['redis_port'], $conf['redis_timeout']);
-        if( !$l_r->rPush(constant("AREAS_TABLE"), $area_name) ) {
-            die ("Write " . $area_name . " to " . constant("AREAS_TABLE") . " failed,\n
-                  Please verify your redis server is runing, and can connect it.");
-            exit;
+
+        try {
+            $l_r->zAdd(constant("AREAS_TABLE"), time(), $area_name);
         }
+        catch(Exception $e) {
+            echo 'Message: ' .$e->getMessage();
+        }
+
         if ( !$l_r->hMset('H_' . $area_name . '_INFO', $this->getMembers_value()) ) {
             die ("Write area_info to H_ " . $area_name . "_INFO failed,\n
                   Verify your redis server.");

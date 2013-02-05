@@ -28,6 +28,5 @@ $boot_file;
     foreach ($basic_arr as $k) {
         $AI->$k = ${$k};
     }
-    var_dump($AI->getMembers_value());
-
+    $AI->saveIt();
 ?>
