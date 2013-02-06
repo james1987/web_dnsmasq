@@ -8,6 +8,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1"> 
 <title>web_dnsmasq</title>
 <link rel="stylesheet" href="css/jquery.mobile-1.2.0.css" />
+<link rel="stylesheet" href="css/main.css" />
 <script src="js/jquery-1.8.2.js"></script>
 <script src="js/jquery.mobile-1.2.0.js"></script>
 <script src="js/main.js"></script>
@@ -21,17 +22,32 @@
 
     <div data-role="content">   
         <h3>概况：</h3>
-        <p>一切正常！</p>
-<pre>
-<?php
-var_dump(get_areas());
-foreach(get_areas() as $area) {
-$AI = new Area_Info();
-$AI->getIt($area);
-var_dump($AI);
-}
-?>
-</pre>
+        <div data-role="collapsible-set">
+            <div class="ui-grid-a">
+        <?php
+            foreach(get_areas() as $area) {
+                $AI = new Area_Info();
+                $AI->getIt($area);
+                echo '<div class="ui-block-a">';
+                echo '    <div data-role="collapsible" data-theme="c" data-content-theme="c">';
+                echo '    <h3>' . $AI->area_name . '</h3>';
+                echo '      <p class="s_content">Net_Segment:' . $AI->network_segment . '</p>';
+                echo '      <p class="s_content">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Pool:' . $AI->start_IP . '->' . $AI->end_IP . '</p>';
+                echo '          <div data-role="collapsible" data-theme="c" data-content-theme="c">';
+                echo '            <h4>详细配置</h4>';
+                echo '          </div>';
+                echo '    </div>';
+                echo '</div>';
+                echo '<div class="ui-block-b">';
+                echo '    <select for="fuck" name="flip-1" id="flip-1" data-role="slider">
+                              <option value="off">Off</option>
+                              <option value="on">On</option>
+                          </select>';
+                echo '</div>';
+            }
+        ?>
+            </div>
+        </div>
         <p><a href="#create_panel" data-role="button" data-rel="dialog" data-transition="pop">创建作用域</a></p>
     </div><!-- /content -->
 
@@ -40,15 +56,12 @@ var_dump($AI);
     </div><!-- /footer -->
 </div><!-- /page -->
 
-
 <!-- Start of second page -->
 <div data-role="page" id="create_panel" data-title="作用域创建面板">
-
     <div data-role="header">
         <h1>创建新域</h1>
         <a id="button_save" data-icon="check" data-theme="b">保存</a>
     </div><!-- /header -->
-
     <div data-role="content"> 
         <form id="form_create_area">
             <div data-role="fieldcontain">
