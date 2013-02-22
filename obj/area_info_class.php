@@ -5,6 +5,7 @@ class Area_Info {
     var $network_segment;
     var $start_IP;
     var $end_IP;
+    var $service;
 /* --------------------------EXTEND------------------------- */
     var $lease_time;
     var $interface;
@@ -52,6 +53,7 @@ class Area_Info {
         $l_r->connect($conf['redis_host'], $conf['redis_port'], $conf['redis_timeout']);
 
         try {
+            $area_names = getIt($area_name);
             $l_r->zAdd(constant("AREAS_TABLE"), time(), $area_name);
         }
         catch(Exception $e) {
@@ -63,6 +65,16 @@ class Area_Info {
                   Verify your redis server.");
             exit;
         }
+        $l_r->close();
+    }
+
+    function delIt() {
+        global $conf;
+        $area_name = $this->area_name;
+        $l_r = new Redis();
+        $l_r->connect($conf['redis_host'], $conf['redis_port'], $conf['redis_timeout']);
+        $l_r->del($area_name);
+        $l_r->del('H_' . $area_name . '_INFO');
         $l_r->close();
     }
 }

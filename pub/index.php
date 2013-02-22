@@ -21,8 +21,8 @@
     </div><!-- /header -->
 
     <div data-role="content">   
-        <h3>概况：</h3>
-        <div data-role="collapsible-set">
+        <h3>Overview:</h3>
+        <div id="overview" data-role="collapsible-set">
             <div class="ui-grid-a">
         <?php
             foreach(get_areas() as $area) {
@@ -39,10 +39,10 @@
                 echo '    </div>';
                 echo '</div>';
                 echo '<div class="ui-block-b">';
-                echo '    <select for="fuck" name="flip-1" id="flip-1" data-role="slider">
-                              <option value="off">Off</option>
-                              <option value="on">On</option>
-                          </select>';
+                echo '    <select name="' . $AI->area_name . '" id="AI_service" data-role="slider">
+                              <option value="off">Off</option>';
+                echo          'on'==$AI->service?'<option value="on" selected="selected">On</option>':'<option value="on">On</option>';
+                echo '    </select>';
                 echo '</div>';
             }
         ?>
@@ -92,6 +92,7 @@
                 <label for="end_IP">End_IP</label>
                 <input type="range" name="end_IP" id="end_IP" min="1" max="254" data-highlight="true"  />
             </div>
+            <input type="hidden" name="service" id="service" value="off" />
         </form>
     </div><!-- /content -->
 

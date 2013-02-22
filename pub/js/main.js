@@ -13,6 +13,7 @@ $(document).ready(function(){
     $("#button_save").click( function() {
         $.post("handle.php",
         {
+            action:create,
             area_name:$("#area_name").val(),
             network_segment:$("#network_segment").val(),
             start_IP:$("#start_IP").val(),
@@ -28,4 +29,20 @@ $(document).ready(function(){
         });
     });
 
+    $("#AI_service").on('slidestop', function() {
+        $.post("handle.php",
+        {
+            action:'change',
+            area_name:this.name,
+            service:this.value,
+        },
+        function(data,status){
+            if ("success" == status) {
+                window.location.href="/";
+            }
+            else {
+                alert("Not OK!");
+            }
+        });
+    });
 });
