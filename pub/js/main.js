@@ -13,7 +13,7 @@ $(document).ready(function(){
     $("#button_save").click( function() {
         $.post("handle.php",
         {
-            action:create,
+            action:'create',
             area_name:$("#area_name").val(),
             network_segment:$("#network_segment").val(),
             start_IP:$("#start_IP").val(),
@@ -29,7 +29,7 @@ $(document).ready(function(){
         });
     });
 
-    $("#AI_service").on('slidestop', function() {
+    $("[id=AI_service]").on('slidestop', function() {
         $.post("handle.php",
         {
             action:'change',

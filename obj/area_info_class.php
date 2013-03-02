@@ -33,7 +33,7 @@ class Area_Info {
         $elements = $l_r->hGetAll('H_' . $area_name . '_INFO');
         $l_r->close();
         if ( Null == $elements ) {
-            die ("The area " . $area_name . "don't exist in this system,\n
+            die ("The area " . $area_name . " don't exist in this system,\n
                   Please check out your area name.");
             exit;
         }
@@ -53,8 +53,9 @@ class Area_Info {
         $l_r->connect($conf['redis_host'], $conf['redis_port'], $conf['redis_timeout']);
 
         try {
-            $area_names = getIt($area_name);
-            $l_r->zAdd(constant("AREAS_TABLE"), time(), $area_name);
+            if ( !in_array($area_name, get_areas()) ) {
+                $l_r->zAdd(constant("AREAS_TABLE"), time(), $area_name);
+            }
         }
         catch(Exception $e) {
             echo 'Message: ' .$e->getMessage();
