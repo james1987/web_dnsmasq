@@ -18,6 +18,23 @@ $(document).ready(function(){
             network_segment:$("#network_segment").val(),
             start_IP:$("#start_IP").val(),
             end_IP:$("#end_IP").val(),
+            change:$("#change").val(),
+        },
+        function(data,status){
+            if ("success" == status) {
+                window.location.href="/";
+            }
+            else {
+                alert("Not OK!");
+            }
+        });
+    });
+
+    $("#button_delete").click( function() {
+        $.post("handle.php",
+        {
+            action:'delete',
+            area_name:$("#delete_domain").val(),
         },
         function(data,status){
             if ("success" == status) {
@@ -35,6 +52,7 @@ $(document).ready(function(){
             action:'change',
             area_name:this.name,
             service:this.value,
+            change:$("#change").val(),
         },
         function(data,status){
             if ("success" == status) {

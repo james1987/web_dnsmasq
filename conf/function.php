@@ -18,6 +18,29 @@ function get_mirco() {
     list($usec, $sec) = explode(" ", microtime());
     return  $sec . substr(explode(".", $usec)[1],0,-2);
 }
+function get_mask($num) {
+    $b_0 = '.0';
+    $b_1 = '.128';
+    $b_2 = '.192';
+    $b_3 = '.224';
+    $b_4 = '.240';
+    $b_5 = '.248';
+    $b_6 = '.252';
+    $b_7 = '.254';
+    $b_8 = '.255';
+    $mask = '';
+    for ($i = 0; $i < 4 ; $i++) {
+        $num -= 8;
+        if ($num > 0) {
+            $mask .= $b_8;
+        }
+        else {
+            $mask .= ${'b_' . (string) (8-abs($num))};
+            $num = 0;
+        }
+    }
+    return ltrim($mask,'.');
+}
 function get_areas() {
     global $conf;
     $l_r = new Redis();

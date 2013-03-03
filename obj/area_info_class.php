@@ -6,6 +6,7 @@ class Area_Info {
     var $start_IP;
     var $end_IP;
     var $service;
+    var $change;
 /* --------------------------EXTEND------------------------- */
     var $lease_time;
     var $interface;
@@ -74,7 +75,7 @@ class Area_Info {
         $area_name = $this->area_name;
         $l_r = new Redis();
         $l_r->connect($conf['redis_host'], $conf['redis_port'], $conf['redis_timeout']);
-        $l_r->del($area_name);
+        $l_r->zDelete(constant("AREAS_TABLE"), $area_name);
         $l_r->del('H_' . $area_name . '_INFO');
         $l_r->close();
     }

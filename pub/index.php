@@ -49,6 +49,7 @@
             </div>
         </div>
         <p><a href="#create_panel" data-role="button" data-rel="dialog" data-transition="pop">创建作用域</a></p>
+        <p><a href="#delete_panel" data-role="button" data-rel="dialog" data-transition="pop">删除作用域</a></p>
     </div><!-- /content -->
 
     <div data-role="footer">
@@ -93,9 +94,31 @@
                 <input type="range" name="end_IP" id="end_IP" min="1" max="254" data-highlight="true"  />
             </div>
             <input type="hidden" name="service" id="service" value="off" />
+            <input type="hidden" name="change" id="change" value="Y" />
         </form>
     </div><!-- /content -->
-
+    <div data-role="footer">
+        <h4>Page Footer</h4>
+    </div><!-- /footer -->
+</div><!-- /page -->
+<!-- Start of third page -->
+<div data-role="page" id="delete_panel" data-title="作用域删除面板">
+    <div data-role="header">
+        <h1>删除域</h1>
+        <a id="button_delete" data-icon="check" data-theme="b">删除</a>
+    </div><!-- /header -->
+    <div data-role="content">
+        <div data-role="fieldcontain">
+            <label for="delete_domain" class="select">Delete Domain</label>
+            <select name="delete_domain" id="delete_domain" data-theme="c" data-overlay-theme="d" data-native-menu="false">
+                <?php
+                    foreach(get_areas() as $area) {
+                        echo '<option value="' . $area . '">' . $area . '</option>';
+                    }
+                ?>
+            </select>
+        </div>
+    </div>
     <div data-role="footer">
         <h4>Page Footer</h4>
     </div><!-- /footer -->

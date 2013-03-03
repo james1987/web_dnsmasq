@@ -33,7 +33,10 @@
             }
             $AI->saveIt();
             break;  
-        case 'del':
+        case 'delete':
+            $AI = new Area_Info();
+            $AI->getIt($_REQUEST['area_name']);
+            $AI->delIt();
             break;
         case 'update';
             break;
@@ -41,6 +44,7 @@
             $AI = new Area_Info();
             $AI->getIt($_REQUEST['area_name']);
             $AI->service = $_REQUEST['service'];
+            $AI->change = $_REQUEST['change'];
             $AI->saveIt();
             break;
         default:
