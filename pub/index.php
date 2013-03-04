@@ -97,6 +97,18 @@
                 <label for="end_IP">End_IP</label>
                 <input type="range" name="end_IP" id="end_IP" min="1" max="254" data-highlight="true"  />
             </div>
+            <div id="expand_panel" data-role="collapsible-set">
+                <div class="ui-grid-a">
+                    <div class="ui-block-a">
+                        <div data-role="collapsible" data-theme="c" data-content-theme="c">
+                        <h3>扩展配置</h3>
+                              <div data-role="collapsible" data-theme="c" data-content-theme="c">
+                                <h4>TFTP Server</h4>
+                              </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
             <input type="hidden" name="service" id="service" value="off" />
             <input type="hidden" name="change" id="change" value="Y" />
         </form>
