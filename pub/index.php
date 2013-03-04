@@ -1,5 +1,6 @@
 <?php
     include_once dirname(__FILE__) . '/../conf/function.php';
+    exec("/sbin/ip addr show|grep 'inet '|awk '{print $2}'",$net_segs);
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
@@ -72,8 +73,11 @@
             <div data-role="fieldcontain">
                 <label for="network_segment" class="select">Network segment</label>
                 <select name="network_segment" id="network_segment" data-theme="c" data-overlay-theme="d" data-native-menu="false">
-                    <option value="1.0.0.0/24">1.0.0.0/24</option>
-                    <option value="192.168.1.0/24">192.168.1.0/24</option>
+                    <?php
+                        foreach ($net_segs as $net_seg) {
+                            echo '<option value="' . $net_seg . '">' . $net_seg . '</option>';
+                        }
+                    ?>
                 </select>
             </div>
             <div data-role="fieldcontain">
