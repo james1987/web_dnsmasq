@@ -19,6 +19,18 @@ $(document).ready(function(){
             start_IP:$("#start_IP").val(),
             end_IP:$("#end_IP").val(),
             change:$("#change").val(),
+//--------------------------EXTEND-------------------------
+            lease_time:$("#lease_time").val(),
+            interface:$("#interface").val(),
+            router:$("#router").val(),
+            dns:$("#dns").val(),
+            mx_host:$("#mx_host").val(),
+            ntp:$("#ntp").val(),
+//--------------------------EXTEND=>TFTP-------------------------
+            tftp_enable:"off",
+            tftp_server:$("#tftp_server").val(),
+            tftp_root:$("#tftp_root").val(),
+            boot_file:$("#boot_file").val(),
         },
         function(data,status){
             if ("success" == status) {
@@ -52,6 +64,24 @@ $(document).ready(function(){
             action:'change',
             area_name:this.name,
             service:this.value,
+            change:$("#change").val(),
+        },
+        function(data,status){
+            if ("success" == status) {
+                window.location.href="/";
+            }
+            else {
+                alert("Not OK!");
+            }
+        });
+    });
+
+    $("[id=tftp_enable]").on('slidestop', function() {
+        $.post("handle.php",
+        {
+            action:'change',
+            area_name:this.name,
+            tftp_enable:this.value,
             change:$("#change").val(),
         },
         function(data,status){

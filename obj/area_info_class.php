@@ -15,7 +15,7 @@ class Area_Info {
     var $mx_host;
     var $ntp;
 /* --------------------------EXTEND=>TFTP------------------------- */
-    var $tftp_enable = false;
+    var $tftp_enable = "off";
     var $tftp_server;
     var $tftp_root;
     var $boot_file;

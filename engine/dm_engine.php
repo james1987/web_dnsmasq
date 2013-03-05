@@ -29,16 +29,27 @@ while (true) {
     $dhcp_router = 'dhcp-option=3,' . $AI->router . "\r\n";
     $dhcp_dns = 'dhcp-option=6,' . $AI->dns . "\r\n";
     $dhcp_domain = 'dhcp-option=15,' . $domain_name . "\r\n";
+    $dhcp_ntp = 'dhcp-option=42,' . $AI->ntp . "\r\n";
+    $mx_host = 'mx-host=' . $domain_name . ',' . $AI->mx_host . ',50' . "\r\n";
+    $tftp_server = 'dhcp-option=66,' . $AI->tftp_server . "\r\n";
+    $boot_file = 'dhcp-option=67,' . $AI->boot_file . "\r\n";
+    $tftp_root = 'tftp-root=' . $AI->tftp_root . "\r\n";
     $file = fopen($conf_file, 'w');
     fwrite($file,$dhcp_range);
     fwrite($file,$dhcp_router);
     fwrite($file,$dhcp_dns);
     fwrite($file,$dhcp_domain);
+    if ('on' == $AI->tftp_enable) {
+        fwrite($file,"enable-tftp\r\n");
+        fwrite($file,$tftp_server);
+        fwrite($file,$boot_file);
+        fwrite($file,$tftp_root);
+    }
+    fclose($file);
     $AI->change = 'N';
     $AI->saveIt();
     $AI->getIt($area);
     print_r($AI);
-    fclose($file);
 
     if ('on' == $AI->service) {
         if (file_exists($pid_file)) {
