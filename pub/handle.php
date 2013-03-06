@@ -3,7 +3,7 @@
     switch ($_REQUEST['action'])
     {
         case 'create':
-            $basic_arr = array("area_name", "network_segment", "start_IP", "end_IP",
+            $basic_arr = array("area_name", "network_segment", "start_IP", "end_IP", "service", "change",
                             "lease_time", "interface", "router", "dns", "mx_host", "ntp",
                             "tftp_enable", "tftp_server", "tftp_root", "boot_file");
             foreach ($basic_arr as $k) {

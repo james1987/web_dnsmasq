@@ -49,5 +49,13 @@ function get_areas() {
     $l_r->close();
 }
 
+function get_hosts($owner_by) {
+    global $conf;
+    $l_r = new Redis();
+    $l_r->connect($conf['redis_host'], $conf['redis_port'], $conf['redis_timeout']);
+    return $l_r->zRange('HOSTS_' . $owner_by . '_TABLE', 0, -1);
+    $l_r->close();
+}
+
 include_once dirname(__FILE__) . '/../obj/area_info_class.php';
 ?>

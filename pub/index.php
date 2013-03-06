@@ -1,9 +1,3 @@
-<?php
-    include_once dirname(__FILE__) . '/../conf/function.php';
-    exec("/sbin/ip addr show|grep 'inet '|awk '{print $2}'",$net_segs);
-    exec("/sbin/ifconfig | grep '^[a-z]' | awk '{print $1}'",$net_devs);
-    $router = exec("/sbin/route -n|grep '^0.0.0.0'|awk '{print $2}'");
-?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
@@ -26,49 +20,15 @@
     <div data-role="content">   
         <h3>Overview:</h3>
         <div id="overview" data-role="collapsible-set">
-            <div class="ui-grid-a">
-        <?php
-            foreach(get_areas() as $area) {
-                $AI = new Area_Info();
-                $AI->getIt($area);
-                echo '<div class="ui-block-a">';
-                echo '    <div data-role="collapsible" data-theme="c" data-content-theme="c">';
-                echo '    <h3>' . $AI->area_name . '</h3>';
-                echo '      <p class="s_content">Net_Segment:' . $AI->network_segment . '</p>';
-                echo '      <p class="s_content">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Pool:' . $AI->start_IP . '->' . $AI->end_IP . '</p>';
-                echo '          <div data-role="collapsible" data-theme="c" data-content-theme="c">';
-                echo '            <h4>Detail Config</h4>';
-                echo '              <p class="s_content">Lease_Time:' . $AI->lease_time . '</p>';
-                echo '              <p class="s_content">Interface:' . $AI->interface . '</p>';
-                echo '              <p class="s_content">Gateway:' . $AI->router . '</p>';
-                echo '              <p class="s_content">DNS:' . $AI->dns . '</p>';
-                echo '              <p class="s_content">MX_Host:' . $AI->mx_host . '</p>';
-                echo '              <p class="s_content">NTP:' . $AI->ntp . '</p>';
-                echo '              <div data-role="collapsible" data-theme="c" data-content-theme="c">';
-                echo '                <h4>TFTP_Server</h4>';
-                echo '                      <select name="' . $AI->area_name . '" id="tftp_enable" data-role="slider">';
-                echo '                          <option value="off">Off</option>';
-                echo          'on'==$AI->tftp_enable?'<option value="on" selected="selected">On</option>':'<option value="on">On</option>';
-                echo '                      </select>';
-                echo '                  <p class="s_content">Server:' . $AI->tftp_server . '</p>';
-                echo '                  <p class="s_content">Root:' . $AI->tftp_root . '</p>';
-                echo '                  <p class="s_content">Boot_File:' . $AI->boot_file . '</p>';
-                echo '              </div>';
-                echo '          </div>';
-                echo '    </div>';
-                echo '</div>';
-                echo '<div class="ui-block-b">';
-                echo '    <select name="' . $AI->area_name . '" id="AI_service" data-role="slider">
-                              <option value="off">Off</option>';
-                echo          'on'==$AI->service?'<option value="on" selected="selected">On</option>':'<option value="on">On</option>';
-                echo '    </select>';
-                echo '</div>';
-            }
-        ?>
+        </div>
+        <div class="ui-grid-a">
+            <div class="ui-block-a">
+                <p><a href="#create_panel" data-role="button" data-rel="dialog" data-transition="pop">Create</a></p>
+            </div>
+            <div class="ui-block-b">
+                <p><a href="#delete_panel" data-role="button" data-rel="dialog" data-transition="pop">Delete</a></p>
             </div>
         </div>
-        <p><a href="#create_panel" data-role="button" data-rel="dialog" data-transition="pop">Create</a></p>
-        <p><a href="#delete_panel" data-role="button" data-rel="dialog" data-transition="pop">Delete</a></p>
     </div><!-- /content -->
 
     <div data-role="footer">
@@ -91,11 +51,6 @@
             <div data-role="fieldcontain">
                 <label for="network_segment" class="select">Network segment</label>
                 <select name="network_segment" id="network_segment" data-theme="c" data-overlay-theme="d" data-native-menu="false">
-                    <?php
-                        foreach ($net_segs as $net_seg) {
-                            echo '<option value="' . $net_seg . '">' . $net_seg . '</option>';
-                        }
-                    ?>
                 </select>
             </div>
             <div data-role="fieldcontain">
@@ -135,21 +90,15 @@
                             <div data-role="fieldcontain">
                                 <label for="interface" class="select">Interface</label>
                                 <select name="interface" id="interface" data-theme="c" data-overlay-theme="d" data-native-menu="false">
-                                    <?php
-                                        foreach($net_devs as $net_dev) {
-                                            echo '<option value="' . $net_dev . '">' . $net_dev . '</option>';
-                                        }
-                                    ?>
-                                    <option value="all" selected="selected">all</option>
                                 </select>
                             </div>
                             <div data-role="fieldcontain">
                                 <label for="router">Gateway</label>
-                                <input type="text" name="router" id="router" value="<?php echo $router ?>"/>
+                                <input type="text" name="router" id="router" value=""/>
                             </div>
                             <div data-role="fieldcontain">
                                 <label for="dns">DNS</label>
-                                <input type="text" name="dns" id="dns" value="<?php echo $router ?>"/>
+                                <input type="text" name="dns" id="dns" value=""/>
                             </div>
                             <div data-role="fieldcontain">
                                 <label for="mx_host">Mail Host in Domain</label>
@@ -163,7 +112,7 @@
                                 <h4>TFTP Server</h4>
                                 <div data-role="fieldcontain">
                                     <label for="tftp_server">TFTP Server</label>
-                                    <input type="text" name="tftp_server" id="tftp_server" value="<?php echo $router ?>" />
+                                    <input type="text" name="tftp_server" id="tftp_server" value="" />
                                 </div>
                                 <div data-role="fieldcontain">
                                     <label for="tftp_root">TFTP Root</label>
@@ -196,13 +145,56 @@
         <div data-role="fieldcontain">
             <label for="delete_domain" class="select">Delete Domain</label>
             <select name="delete_domain" id="delete_domain" data-theme="c" data-overlay-theme="d" data-native-menu="false">
-                <?php
-                    foreach(get_areas() as $area) {
-                        echo '<option value="' . $area . '">' . $area . '</option>';
-                    }
-                ?>
             </select>
         </div>
+    </div>
+    <div data-role="footer">
+        <h4>Page Footer</h4>
+    </div><!-- /footer -->
+</div><!-- /page -->
+<!-- Start of fourth page -->
+<div data-role="page" id="host_map_panel" data-title="Host Map Panel">
+    <div data-role="header">
+        <a href="#main" data-icon="home">Home</a>
+        <h1>Host Map</h1>
+        <a id="button_add_item_host_map_bar" data-icon="plus" data-theme="b">ADD</a>
+    </div><!-- /header -->
+    <div id="host_map_content" data-role="content">
+        <ul id="host_map_content_ul" data-role="listview">
+            <li data-role="list-divider">
+                <fieldset class="ui-grid-c" style="text-align:center">
+                    <div class="ui-block-a">
+                        <label>HOST_NAME</label>
+                    </div>
+                    <div class="ui-block-b">
+                        <label>IP_ADDRESS</label>
+                    </div>
+                    <div class="ui-block-c">
+                        <label>MAC_ADDRESS</label>
+                    </div>
+                    <div class="ui-block-d">
+                        <label>ACTION</label>
+                    </div>
+                </fieldset>
+            </li>
+            <li>
+                <fieldset class="ui-grid-c">
+                    <div class="ui-block-a">
+                        <input type="text" name="input_hostname" id="input_hostname" value="" placeholder="host_01.domain.com" />
+                    </div>
+                    <div class="ui-block-b">
+                        <input type="text" name="input_ip_addr" id="input_ip_addr" value="" placeholder="192.168.1.20" />
+                    </div>     
+                    <div class="ui-block-c">
+                        <input type="text" name="input_mac_addr" id="input_mac_addr" value="" placeholder="00:00:00:AA:AA:01" />
+                    </div>     
+                    <div class="ui-block-d">
+                        <a id="button_save_host_map" data-role="button" data-icon="check" data-inline="true" data-theme="b">SAVE</a>
+                        <a id="button_del_host_map" data-role="button" data-icon="delete" data-inline="true" data-theme="a">DEL</a>
+                    </div>     
+                </fieldset>
+            </li>
+        </ul>
     </div>
     <div data-role="footer">
         <h4>Page Footer</h4>

@@ -8,3 +8,6 @@
 #overview div div .ui-slider-switch { width: 70px }
 
 #expand_panel .ui-grid-a .ui-block-a { width: 100% }
+
+#button_save_host_map { width: 60%; }
+#button_del_host_map { width: 30%; }
