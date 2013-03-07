@@ -3,10 +3,10 @@
     switch ($_REQUEST['action'])
     {
         case 'create':
-            $basic_arr = array("area_name", "network_segment", "start_IP", "end_IP", "service", "change",
+            $domain_attr = array("area_name", "network_segment", "start_IP", "end_IP", "service", "change",
                             "lease_time", "interface", "router", "dns", "mx_host", "ntp",
                             "tftp_enable", "tftp_server", "tftp_root", "boot_file");
-            foreach ($basic_arr as $k) {
+            foreach ($domain_attr as $k) {
                 if (isset($_REQUEST[$k])) {
                     ${$k} = $_REQUEST[$k];
                 }
@@ -15,7 +15,7 @@
                 }
             }
             $AI = new Area_Info();
-            foreach ($basic_arr as $k) {
+            foreach ($domain_attr as $k) {
                 $AI->$k = ${$k};
             }
             $AI->saveIt();
@@ -38,6 +38,27 @@
             }
             $AI->change = $_REQUEST['change'];
             $AI->saveIt();
+            break;
+        case 'add_host_map';
+            $host_map_attr = array("owner_by", "hostname", "mac_addr", "ip_addr");
+            foreach ($host_map_attr as $k) {
+                if (isset($_REQUEST[$k])) {
+                    ${$k} = $_REQUEST[$k];
+                }
+                else {
+                    ${$k} = "";
+                }
+            }
+            $HM = new Host_Map();
+            foreach ($host_map_attr as $k) {
+                $HM->$k = ${$k};
+            }
+            $HM->saveIt();
+            break;
+        case 'delete_host_map':
+            $HM = new Host_Map();
+            $HM->getIt($_REQUEST['host_name']);
+            $HM->delIt();
             break;
         default:
     }

@@ -5,7 +5,7 @@
     header('Access-Control-Allow-Methods: POST, GET');
     header('Content-Type: text/plain');
     $Full_URL = $_SERVER['REQUEST_URI'];
-    $args = array("how","host_s");
+    $args = array("how","host_s","owner_by");
     exec("/sbin/ip addr show|grep 'inet '|awk '{print $2}'",$net_segs);
     exec("/sbin/ifconfig | grep '^[a-z]' | awk '{print $1}'",$net_devs);
     $router = exec("/sbin/route -n|grep '^0.0.0.0'|awk '{print $2}'");
@@ -18,7 +18,7 @@
     foreach ($args as $var) {
         ${$var} = Null;
         if (isset($_REQUEST[$var])) {
-            if ("how" == $var) {
+            if ("how" == $var or "owner_by" == $var) {
                 ${$var} = $_REQUEST[$var];
                 continue;
             }
@@ -40,12 +40,17 @@
             }
             echo json_encode($tmp_AI_arr);
             break;
-        case 'get_all_host':
-            if (Null == $range_ts[0] or Null == $range_ts[1]) {
-                echo "请指定start_ts及end_ts";
-                break;
+        case 'get_all_HM':
+            $tmp_HOST_arr = array();
+            foreach (get_hosts($owner_by) as $host_name) {
+                $HM = new Host_Map();
+                $HM->getIt($host_name);
+                array_push($tmp_HOST_arr,$HM);
             }
-            echo json_encode(get_user_count_info($range_ts[0],$range_ts[1]));
+            echo json_encode($tmp_HOST_arr);
+            break;
+        case 'get_all_host':
+            echo json_encode(get_hosts($owner_by));
             break;
         default:
     }

@@ -1,5 +1,6 @@
 <?php
 define("AREAS_TABLE","Z_AREAS");
+define("HOSTS_TABLE","Z_HOSTS_AREA_TABLE");
 $conf = dirname(__FILE__) . '/db_info.ini';
 $conf = parse_ini_file($conf);
 $today = date("Y-m-d");
@@ -53,9 +54,10 @@ function get_hosts($owner_by) {
     global $conf;
     $l_r = new Redis();
     $l_r->connect($conf['redis_host'], $conf['redis_port'], $conf['redis_timeout']);
-    return $l_r->zRange('HOSTS_' . $owner_by . '_TABLE', 0, -1);
+    return $l_r->zRange(str_replace("AREA",$owner_by,constant("HOSTS_TABLE")), 0, -1);
     $l_r->close();
 }
 
 include_once dirname(__FILE__) . '/../obj/area_info_class.php';
+include_once dirname(__FILE__) . '/../obj/host_map_class.php';
 ?>

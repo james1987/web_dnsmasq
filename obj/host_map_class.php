@@ -42,7 +42,7 @@ class Host_Map {
 
         try {
             if ( !in_array($hostname, get_hosts($owner_by)) ) {
-                $l_r->zAdd('HOSTS_' . $owner_by . '_TABLE', time(), $hostname);
+                $l_r->zAdd(str_replace("AREA",$owner_by,constant("HOSTS_TABLE")), time(), $hostname);
             }
         }
         catch(Exception $e) {
@@ -63,7 +63,7 @@ class Host_Map {
         $hostname = $this->hostname;
         $l_r = new Redis();
         $l_r->connect($conf['redis_host'], $conf['redis_port'], $conf['redis_timeout']);
-        $l_r->zDelete('HOSTS_' . $owner_by . '_TABLE', $hostname);
+        $l_r->zDelete(str_replace("AREA",$owner_by,constant("HOSTS_TABLE")), $hostname);
         $l_r->del('H_' . $hostname . '_MAP');
         $l_r->close();
     }

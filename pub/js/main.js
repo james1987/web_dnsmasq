@@ -74,7 +74,7 @@ $(document).ready(function(){
                                   <p class="s_content">Boot_File:' + AI.boot_file + '</p>\
                               </div>\
                           </div>\
-                      <p><a href="#host_map_panel" data-role="button" data-transition="slidefade" data-inline="false">Host Map</a></p>\
+                      <p><a id="go_host_map_panel" href="#host_map_panel" name="' + AI.area_name + '" data-role="button" data-transition="slidefade" data-inline="false">Host Map</a></p>\
                     </div>\
                 </div>\
                 <div class="ui-block-b">\
@@ -83,6 +83,61 @@ $(document).ready(function(){
                 </div>\
             </div>').trigger("create");
         }
+    }
+
+    function put_HM_value(HMs) {
+        for (i in HMs) {
+            HM = HMs[i];
+            $("#host_map_content_ul").append('\
+                <li class="ui-li ui-li-static ui-btn-up-c ui-li-last">\
+                    <fieldset class="ui-grid-c">\
+                        <div class="ui-block-a">\
+                            <input type="text" class="ui-disabled" name="input_hostname" id="input_hostname" value="' + HM.hostname + '" placeholder="host_01.domain.com" />\
+                        </div>\
+                        <div class="ui-block-b">\
+                            <input type="text" class="ui-disabled" name="input_ip_addr" id="input_ip_addr" value="' + HM.ip_addr + '" placeholder="192.168.1.20" />\
+                        </div>\
+                        <div class="ui-block-c">\
+                            <input type="text" class="ui-disabled" name="input_mac_addr" id="input_mac_addr" value="' + HM.mac_addr + '" placeholder="00:00:00:AA:AA:01" />\
+                        </div>\
+                        <div class="ui-block-d">\
+                            <a id="button_save_host_map" class="ui-disabled" data-role="button" data-icon="check" data-inline="true" data-theme="b">SAVE</a>\
+                            <a id="button_del_host_map" data-role="button" data-icon="delete" data-inline="true" data-theme="a">DEL</a>\
+                        </div>\
+                    </fieldset>\
+                </li>'
+            ).trigger("create");
+        }
+        if (0 == HMs.length) {
+            $("#host_map_content_ul").append('\
+                <li class="ui-li ui-li-static ui-btn-up-c ui-li-last">\
+                    <fieldset class="ui-grid-c">\
+                        <div class="ui-block-a">\
+                            <input type="text" name="input_hostname" id="input_hostname" value="" placeholder="host_01.domain.com" />\
+                        </div>\
+                        <div class="ui-block-b">\
+                            <input type="text" name="input_ip_addr" id="input_ip_addr" value="" placeholder="192.168.1.20" />\
+                        </div>\
+                        <div class="ui-block-c">\
+                            <input type="text" name="input_mac_addr" id="input_mac_addr" value="" placeholder="00:00:00:AA:AA:01" />\
+                        </div>\
+                        <div class="ui-block-d">\
+                            <a id="button_save_host_map" data-role="button" data-icon="check" data-inline="true" data-theme="b">SAVE</a>\
+                            <a id="button_del_host_map" data-role="button" data-icon="delete" data-inline="true" data-theme="a">DEL</a>\
+                        </div>\
+                    </fieldset>\
+                </li>'
+            ).trigger("create");
+        }
+        else {
+            clone_item_host_map();
+        }
+    }
+
+    function clone_item_host_map() {
+            $("#host_map_content_ul li:last-child").clone().appendTo("#host_map_content_ul");
+            $("#host_map_content_ul li:last-child").find("#button_save_host_map").removeClass("ui-disabled");
+            $("#host_map_content_ul li:last-child").find("input[type=text]").removeClass("ui-disabled");
     }
 
     $("#radio-choice-IP_start").click( function() {
@@ -180,25 +235,74 @@ $(document).ready(function(){
             }
         });
     });
+
     $("#button_add_item_host_map_bar").click( function() {
-        if(2 > $("#host_map_content_ul li").length) {
+        if(1 < $("#host_map_content_ul li").length) {
+            clone_item_host_map();
         }
-        else {
-            $("#host_map_content_ul li:last-child").clone().appendTo("#host_map_content_ul");
-        }
+    });
+
+    $("[id=go_host_map_panel]").die().live("click",function() {});
+    $("[id=go_host_map_panel]").live("click",function() {
+        $("#current_domain").val(this.name);
+        $.post(url,
+        {
+            how: "get_all_HM",
+            owner_by: $("#current_domain").val()
+        },
+        function (data,status) {
+            put_HM_value(data)
+        },
+        "json"
+        );
     });
 
     $("[id=button_save_host_map]").die().live("click",function() {});
     $("[id=button_save_host_map]").live("click",function() {
+        cur_but = $(this);
+        $.post("handle.php",
+        {
+            action:'add_host_map',
+            owner_by:$("#current_domain").val(),
+            hostname:$(this).parent().parents().find("input#input_hostname").val(),
+            mac_addr:$(this).parent().parents().find("input#input_mac_addr").val(),
+            ip_addr:$(this).parent().parents().find("input#input_ip_addr").val(),
+        },
+        function(data,status){
+            if ("success" == status) {
+                if (cur_but.parent().parent().parent().index() == $("#host_map_content_ul li:last-child").index()) {
+                    clone_item_host_map();
+                }
+                cur_but.parent().parent().find("input").addClass("ui-disabled");
+                cur_but.addClass("ui-disabled");
+            }
+            else {
+                alert("Not OK!");
+            }
+        });
     });
 
     $("[id=button_del_host_map]").die().live("click",function() {});
     $("[id=button_del_host_map]").live("click",function() {
-        if(2 == $("#host_map_content_ul li").length) {
-            $("#host_map_content_ul li input").val("");
-        }
-        else {
-            $(this).parent().parent().parent().remove();
-        }
+        cur_but = $(this);
+        $.post("handle.php",
+        {
+            action:'delete_host_map',
+            host_name:$(this).parent().parents().find("input#input_hostname").val(),
+        },
+        function(data,status){
+            if ("success" == status) {
+                if(2 == $("#host_map_content_ul li").length) {
+                    $("#host_map_content_ul li input").val("");
+                    cur_but.parent().find("#button_save_host_map").removeClass("ui-disabled");
+                }
+                else {
+                    cur_but.parent().parent().parent().remove();
+                }
+            }
+            else {
+                alert("Not OK!");
+            }
+        });
     });
 });

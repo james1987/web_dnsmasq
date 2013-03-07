@@ -30,7 +30,7 @@
             </div>
         </div>
     </div><!-- /content -->
-
+    <input type="hidden" name="current_domain" id="current_domain" value="" />
     <div data-role="footer">
         <h4>Page Footer</h4>
     </div><!-- /footer -->
@@ -175,23 +175,6 @@
                     <div class="ui-block-d">
                         <label>ACTION</label>
                     </div>
-                </fieldset>
-            </li>
-            <li>
-                <fieldset class="ui-grid-c">
-                    <div class="ui-block-a">
-                        <input type="text" name="input_hostname" id="input_hostname" value="" placeholder="host_01.domain.com" />
-                    </div>
-                    <div class="ui-block-b">
-                        <input type="text" name="input_ip_addr" id="input_ip_addr" value="" placeholder="192.168.1.20" />
-                    </div>     
-                    <div class="ui-block-c">
-                        <input type="text" name="input_mac_addr" id="input_mac_addr" value="" placeholder="00:00:00:AA:AA:01" />
-                    </div>     
-                    <div class="ui-block-d">
-                        <a id="button_save_host_map" data-role="button" data-icon="check" data-inline="true" data-theme="b">SAVE</a>
-                        <a id="button_del_host_map" data-role="button" data-icon="delete" data-inline="true" data-theme="a">DEL</a>
-                    </div>     
                 </fieldset>
             </li>
         </ul>
