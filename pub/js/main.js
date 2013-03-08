@@ -1,11 +1,13 @@
 $(document).ready(function(){
     var url="http://172.26.3.2/gaveme.php";
+    var global_info;
     $.post(url,
     {
         how: "get_gi"
     },
     function (data,status) {
-        put_gi_value(data)
+        global_info = data;
+        put_gi_value(data);
     },
     "json"
     );
@@ -15,7 +17,7 @@ $(document).ready(function(){
         how: "get_AIs"
     },
     function (data,status) {
-        put_AI_value(data)
+        put_AI_value(data);
     },
     "json"
     );
@@ -113,13 +115,13 @@ $(document).ready(function(){
                 <li class="ui-li ui-li-static ui-btn-up-c ui-li-last">\
                     <fieldset class="ui-grid-c">\
                         <div class="ui-block-a">\
-                            <input type="text" name="input_hostname" id="input_hostname" value="" placeholder="host_01.domain.com" />\
+                            <input type="text" name="input_hostname" id="input_hostname" value="" placeholder="host_01.' + global_info.domain_name + '" onclick="this.value = this.placeholder" />\
                         </div>\
                         <div class="ui-block-b">\
-                            <input type="text" name="input_ip_addr" id="input_ip_addr" value="" placeholder="192.168.1.20" />\
+                            <input type="text" name="input_ip_addr" id="input_ip_addr" value="" placeholder="' + global_info.router + '" onclick="this.value = this.placeholder" />\
                         </div>\
                         <div class="ui-block-c">\
-                            <input type="text" name="input_mac_addr" id="input_mac_addr" value="" placeholder="00:00:00:AA:AA:01" />\
+                            <input type="text" name="input_mac_addr" id="input_mac_addr" value="" placeholder="00:00:00:AA:AA:01" onclick="this.value = this.placeholder" />\
                         </div>\
                         <div class="ui-block-d">\
                             <a id="button_save_host_map" data-role="button" data-icon="check" data-inline="true" data-theme="b">SAVE</a>\
@@ -138,6 +140,12 @@ $(document).ready(function(){
             $("#host_map_content_ul li:last-child").clone().appendTo("#host_map_content_ul");
             $("#host_map_content_ul li:last-child").find("#button_save_host_map").removeClass("ui-disabled");
             $("#host_map_content_ul li:last-child").find("input[type=text]").removeClass("ui-disabled");
+    }
+
+    function clear_host_map_panel() {
+        for (var i = 1; i < $("#host_map_content_ul li").length; i++) {
+            $("#host_map_content_ul li:nth-child(i)").remove();
+        }
     }
 
     $("#radio-choice-IP_start").click( function() {
@@ -245,6 +253,7 @@ $(document).ready(function(){
     $("[id=go_host_map_panel]").die().live("click",function() {});
     $("[id=go_host_map_panel]").live("click",function() {
         $("#current_domain").val(this.name);
+        clear_host_map_panel();
         $.post(url,
         {
             how: "get_all_HM",

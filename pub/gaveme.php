@@ -9,10 +9,12 @@
     exec("/sbin/ip addr show|grep 'inet '|awk '{print $2}'",$net_segs);
     exec("/sbin/ifconfig | grep '^[a-z]' | awk '{print $1}'",$net_devs);
     $router = exec("/sbin/route -n|grep '^0.0.0.0'|awk '{print $2}'");
+    $domain_name = exec("hostname -d");
     $gi_arr = array(
             "net_segs" => $net_segs,
             "net_devs" => $net_devs,
-            "router" => $router
+            "router" => $router,
+            "domain_name" => $domain_name
         );
 
     foreach ($args as $var) {
