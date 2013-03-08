@@ -115,13 +115,13 @@ $(document).ready(function(){
                 <li class="ui-li ui-li-static ui-btn-up-c ui-li-last">\
                     <fieldset class="ui-grid-c">\
                         <div class="ui-block-a">\
-                            <input type="text" name="input_hostname" id="input_hostname" value="" placeholder="host_01.' + global_info.domain_name + '" onclick="this.value = this.placeholder" />\
+                            <input type="text" name="input_hostname" id="input_hostname" value="" placeholder="host_01.' + global_info.domain_name + '" />\
                         </div>\
                         <div class="ui-block-b">\
-                            <input type="text" name="input_ip_addr" id="input_ip_addr" value="" placeholder="' + global_info.router + '" onclick="this.value = this.placeholder" />\
+                            <input type="text" name="input_ip_addr" id="input_ip_addr" value="" placeholder="' + global_info.router + '" />\
                         </div>\
                         <div class="ui-block-c">\
-                            <input type="text" name="input_mac_addr" id="input_mac_addr" value="" placeholder="00:00:00:AA:AA:01" onclick="this.value = this.placeholder" />\
+                            <input type="text" name="input_mac_addr" id="input_mac_addr" value="" placeholder="00:00:00:AA:AA:01" />\
                         </div>\
                         <div class="ui-block-d">\
                             <a id="button_save_host_map" data-role="button" data-icon="check" data-inline="true" data-theme="b">SAVE</a>\
@@ -249,6 +249,16 @@ $(document).ready(function(){
             clone_item_host_map();
         }
     });
+
+    $("[id=host_map_content_ul]").find("input").die().live("click",function() {});
+    $("[id=host_map_content_ul]").find("input").live("click",function() {
+        if (1 == $(this).parent().parent().parent().index()) {
+            if ("" == $(this).val()) {
+                $(this).val($(this).attr('placeholder'));
+            }
+        }
+    });
+
 
     $("[id=go_host_map_panel]").die().live("click",function() {});
     $("[id=go_host_map_panel]").live("click",function() {
