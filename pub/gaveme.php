@@ -6,9 +6,19 @@
     header('Content-Type: text/plain');
     $Full_URL = $_SERVER['REQUEST_URI'];
     $args = array("how","host_s","owner_by");
+    if (file_exists("/sbin/ifconfig")) {
+        exec("/sbin/ifconfig | grep '^[a-z]' | awk '{print $1}'",$net_devs);
+    }
+    else {
+        exec("/bin/ifconfig | grep '^[a-z]' | awk -F \"[\':\t]\" '{print $1}'",$net_devs);
+    }
+    if (file_exists("/sbin/route")) {
+        $router = exec("/sbin/route -n|grep '^0.0.0.0'|awk '{print $2}'");
+    }
+    else {
+        $router = exec("/bin/route -n|grep '^0.0.0.0'|awk '{print $2}'");
+    }
     exec("/sbin/ip addr show|grep 'inet '|awk '{print $2}'",$net_segs);
-    exec("/sbin/ifconfig | grep '^[a-z]' | awk '{print $1}'",$net_devs);
-    $router = exec("/sbin/route -n|grep '^0.0.0.0'|awk '{print $2}'");
     $domain_name = exec("hostname -d");
     $gi_arr = array(
             "net_segs" => $net_segs,

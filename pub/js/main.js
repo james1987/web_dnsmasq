@@ -1,5 +1,6 @@
 $(document).ready(function(){
-    var url="http://172.26.3.2/gaveme.php";
+    var server_ip = window.document.location.host;
+    var url="http://" + server_ip + "/gaveme.php";
     var global_info;
     $.post(url,
     {
