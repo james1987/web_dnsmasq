@@ -160,35 +160,46 @@ $(document).ready(function(){
     });
     
     $("#button_save").click( function() {
-        $.post("handle.php",
-        {
-            action:'create',
-            area_name:$("#area_name").val(),
-            network_segment:$("#network_segment").val(),
-            start_IP:$("#start_IP").val(),
-            end_IP:$("#end_IP").val(),
-            change:$("#change").val(),
-//--------------------------EXTEND-------------------------
-            lease_time:$("#lease_time").val(),
-            interface:$("#interface").val(),
-            router:$("#router").val(),
-            dns:$("#dns").val(),
-            mx_host:$("#mx_host").val(),
-            ntp:$("#ntp").val(),
-//--------------------------EXTEND=>TFTP-------------------------
-            tftp_enable:"off",
-            tftp_server:$("#tftp_server").val(),
-            tftp_root:$("#tftp_root").val(),
-            boot_file:$("#boot_file").val(),
-        },
-        function(data,status){
-            if ("success" == status) {
-                window.location.href="/";
-            }
-            else {
-                alert("Not OK!");
-            }
-        });
+        var is_ok = true;
+        if ("" == $("#area_name").val()) {
+            is_ok = false;
+            alert("Area_Name need some leters");
+        }
+        if ("" == $("#end_IP").val()) {
+            is_ok = false;
+            alert("You need set end_IP");
+        }
+        if (is_ok) {
+            $.post("handle.php",
+            {
+                action:'create',
+                area_name:$("#area_name").val(),
+                network_segment:$("#network_segment").val(),
+                start_IP:$("#start_IP").val(),
+                end_IP:$("#end_IP").val(),
+                change:$("#change").val(),
+//-----------------------------------EXTEND-------------------------
+                lease_time:$("#lease_time").val(),
+                interface:$("#interface").val(),
+                router:$("#router").val(),
+                dns:$("#dns").val(),
+                mx_host:$("#mx_host").val(),
+                ntp:$("#ntp").val(),
+//------------------------------EXTEND=>TFTP-------------------------
+                tftp_enable:"off",
+                tftp_server:$("#tftp_server").val(),
+                tftp_root:$("#tftp_root").val(),
+                boot_file:$("#boot_file").val(),
+            },
+            function(data,status){
+                if ("success" == status) {
+                    window.location.href="/";
+                }
+                else {
+                    alert("Not OK!");
+                }
+            });
+        }
     });
 
     $("#button_delete").click( function() {

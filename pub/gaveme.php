@@ -18,7 +18,12 @@
     else {
         $router = exec("/bin/route -n|grep '^0.0.0.0'|awk '{print $2}'");
     }
-    exec("/sbin/ip addr show|grep 'inet '|awk '{print $2}'",$net_segs);
+    if (file_exists("/sbin/ip")) {
+        exec("/sbin/ip addr show|grep 'inet '|awk '{print $2}'",$net_segs);
+    }
+    else {
+        exec("/bin/ip addr show|grep 'inet '|awk '{print $2}'",$net_segs);
+    }
     $domain_name = exec("hostname -d");
     $gi_arr = array(
             "net_segs" => $net_segs,
