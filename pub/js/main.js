@@ -144,8 +144,9 @@ $(document).ready(function(){
     }
 
     function clear_host_map_panel() {
-        for (var i = 1; i < $("#host_map_content_ul li").length; i++) {
-            $("#host_map_content_ul li:nth-child(i)").remove();
+        var ul_childs = $("#host_map_content_ul li").length;
+        for (var i = 2; i <= ul_childs; i++) {
+            $("#host_map_content_ul li:nth-child(2)").remove();
         }
     }
 

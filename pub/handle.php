@@ -60,6 +60,27 @@
             $HM->getIt($_REQUEST['host_name']);
             $HM->delIt();
             break;
+        case 'add_disk_image';
+            $disk_image_attr = array("img_name", "size", "format", "owner_by_host");
+            foreach ($disk_image_attr as $k) {
+                if (isset($_REQUEST[$k])) {
+                    ${$k} = $_REQUEST[$k];
+                }
+                else {
+                    ${$k} = "";
+                }
+            }
+            $DI = new Disk_Image();
+            foreach ($disk_image_attr as $k) {
+                $DI->$k = ${$k};
+            }
+            $DI->saveIt();
+            break;
+        case 'delete_disk_image':
+            $DI = new Disk_Image();
+            $DI->getIt($_REQUEST['img_name']);
+            $DI->delIt();
+            break;
         default:
     }
 ?>

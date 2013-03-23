@@ -1,8 +1,11 @@
 <?php
 define("AREAS_TABLE","Z_AREAS");
 define("HOSTS_TABLE","Z_HOSTS_AREA_TABLE");
+define("DISK_POOL","Z_DISK_POOL_TABLE");
 $conf = dirname(__FILE__) . '/db_info.ini';
 $conf = parse_ini_file($conf);
+$libvirt_conf = '/etc/php/fpm-php5.4/ext/libvirt-php.ini';
+$libvirt_conf = parse_ini_file($libvirt_conf);
 $today = date("Y-m-d");
 $mirco_sec = get_mirco();
 $now_time = date("H:i:s");
@@ -58,6 +61,15 @@ function get_hosts($owner_by) {
     $l_r->close();
 }
 
+function get_disk_pool() {
+    global $conf;
+    $l_r = new Redis();
+    $l_r->connect($conf['redis_host'], $conf['redis_port'], $conf['redis_timeout']);
+    return $l_r->zRange(constant("DISK_POOL"), 0, -1);
+    $l_r->close();
+}
+
 include_once dirname(__FILE__) . '/../obj/area_info_class.php';
 include_once dirname(__FILE__) . '/../obj/host_map_class.php';
+include_once dirname(__FILE__) . '/../obj/disk_image_class.php';
 ?>

@@ -29,7 +29,10 @@
             "net_segs" => $net_segs,
             "net_devs" => $net_devs,
             "router" => $router,
-            "domain_name" => $domain_name
+            "domain_name" => $domain_name,
+            "iso_path" => $libvirt_conf['libvirt.iso_path'],
+            "image_path" => $libvirt_conf['libvirt.image_path'],
+            "max_connections" => $libvirt_conf['libvirt.max_connections']
         );
 
     foreach ($args as $var) {
@@ -68,6 +71,15 @@
             break;
         case 'get_all_host':
             echo json_encode(get_hosts($owner_by));
+            break;
+        case 'get_disk_pool':
+            $tmp_DISK_POOL = array();
+            foreach (get_disk_pool() as $img_name) {
+                $DI = new Disk_Image();
+                $DI->getIt($img_name);
+                array_push($tmp_DISK_POOL,$DI);
+            }
+            echo json_encode($tmp_DISK_POOL);
             break;
         default:
     }
