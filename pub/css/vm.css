@@ -1,0 +1,29 @@
+@charset "utf-8";
+/* CSS Document */
+/*@font-face { 
+ font-family: 'fontNameRegular'; 
+ src: url('fontName.eot'); 
+ src: local('fontName Regular'), 
+        local('fontName'), 
+        url('fontName.woff') format('woff'), 
+        url('fontName.ttf') format('truetype'), 
+        url('fontName.svg#fontName') format('svg'); 
+}*/
+body { margin:0; font-size:12px; font-family:Verdana; line-height:1.5;}
+ul,dl,dd,h1,h2,h3,h4,h5,h6,form,p,div { padding:0; margin:0;}
+ul { list-style:none;}
+img { border:0px;}
+a { color:#05a; text-decoration:none;}
+a:hover { color:#f00;}
+
+#layout { margin:0 auto; width:100%;}
+#control_side { float:left; width:10%; height:500px; background:#cc6;}
+#info_panel { float:right; width:90%; height:500px; background:#ddd;}
+
+#disk_pool_content_ul .ui-block-a { width: 15% }
+#disk_pool_content_ul .ui-block-b { width: 15% }
+#disk_pool_content_ul .ui-block-c { width: 15% }
+#disk_pool_content_ul .ui-block-d { width: 15% }
+#disk_pool_content_ul .ui-block-e { width: 30% }
+#button_save_disk_image { width: 60%; }
+#button_del_disk_image { width: 30%; }

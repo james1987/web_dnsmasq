@@ -40,7 +40,7 @@
             $AI->saveIt();
             break;
         case 'add_host_map';
-            $host_map_attr = array("owner_by", "hostname", "mac_addr", "ip_addr");
+            $host_map_attr = array("owner_by", "hostname", "mac_addr", "ip_addr", "role");
             foreach ($host_map_attr as $k) {
                 if (isset($_REQUEST[$k])) {
                     ${$k} = $_REQUEST[$k];

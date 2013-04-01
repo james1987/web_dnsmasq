@@ -72,4 +72,5 @@ function get_disk_pool() {
 include_once dirname(__FILE__) . '/../obj/area_info_class.php';
 include_once dirname(__FILE__) . '/../obj/host_map_class.php';
 include_once dirname(__FILE__) . '/../obj/disk_image_class.php';
+include_once dirname(__FILE__) . '/../obj/node_class.php';
 ?>

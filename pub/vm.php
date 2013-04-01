@@ -4,11 +4,13 @@
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1"> 
 <title>Virtual Host Manage</title>
-<link rel="stylesheet" href="css/jquery.mobile-1.2.0.css" />
-<link rel="stylesheet" href="css/main.css" />
-<script src="js/jquery-1.8.2.js"></script>
-<script src="js/jquery.mobile-1.2.0.js"></script>
-<script src="js/vm.js"></script>
+<link rel="stylesheet" type="text/css" href="css/jquery.mobile-1.2.0.css" />
+<link rel="stylesheet" type="text/css" href="css/zTreeStyle/zTreeStyle.css">
+<link rel="stylesheet" type="text/css" href="css/vm.css" />
+<script type="text/javascript" src="js/jquery-1.8.2.js"></script>
+<script type="text/javascript" src="js/jquery.mobile-1.2.0.js"></script>
+<script type="text/javascript" src="js/jquery.ztree.core-3.5.js"></script>
+<script type="text/javascript" src="js/vm.js"></script>
 </head>
 <body>
 <div data-role="page" id="main">
@@ -17,19 +19,16 @@
         <h1>Web_VHM</h1>
     </div><!-- /header -->
 
-    <div data-role="content">   
-        <h3>Overview:</h3>
-        <div id="overview" data-role="collapsible-set">
+    <div id="layout">
+        <div id="navigate">
+            <p><a id="go_disk_pool_panel" href="#disk_pool_panel" data-role="button" data-transition="slidefade" data-inline="false">Disk_Pool</a></p>
         </div>
-        <div class="ui-grid-b">
-            <div class="ui-block-a">
-                <p><a href="#create_panel" data-role="button" data-rel="dialog" data-transition="pop">Create</a></p>
+        <div id="content" data-role="content">
+            <div id="control_side">
+                <ul id="control_tree" class="ztree"></ul>
             </div>
-            <div class="ui-block-b">
-                <p><a href="#delete_panel" data-role="button" data-rel="dialog" data-transition="pop">Delete</a></p>
-            </div>
-            <div class="ui-block-c">
-                <p><a id="go_disk_pool_panel" href="#disk_pool_panel" data-role="button" data-transition="slidefade" data-inline="false">Disk_Pool</a></p>
+            <div id="info_panel">
+                <h1>INFO_PANEL</h1>
             </div>
         </div>
     </div><!-- /content -->

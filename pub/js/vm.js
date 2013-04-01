@@ -2,12 +2,29 @@ $(document).ready(function(){
     var server_ip = window.document.location.host;
     var url="http://" + server_ip + "/gaveme.php";
     var global_info;
+    var all_HM;
+    var all_node_obj;
+    var zNodes = [
+        {name:"root", open:true, children:[]}
+    ];
     $.post(url,
     {
         how: "get_gi"
     },
     function (data,status) {
         global_info = data;
+        $.post(url,
+        {
+            how: "get_all_HM",
+            owner_by: global_info.areas[0],
+        },
+        function (data,status) {
+            all_HM = data;
+            all_node_obj = obj_filter(all_HM,"role","NODE");
+            get_vi();
+        },
+        "json"
+        )
     },
     "json"
     );
@@ -163,4 +180,47 @@ $(document).ready(function(){
             }
         });
     });
+
+    function init_zTree(data) {
+        var datas = new Array();
+        var years = get_years(data);
+        for (var y = 0; y < years.length; y++) {
+            var months = get_months(data,years[y]);
+            datas.push({name:years[y], open:false, children:[]});
+            for (var m = 0; m < months.length; m++) {
+                datas[y].children.push({name:months[m]});
+            }
+        }
+        return datas;
+    }
+
+    function obj_filter(obj_s, type, match) {
+        var tmp_arr = new Array();
+        for (var i = 0; i < obj_s.length; i++) {
+            alert(obj_s[i].hostname);
+            type = eval("obj_s[" + i + "]." + type);
+            if (match == type) {
+                tmp_arr.push(obj_s[i]);
+            }
+        }
+        return tmp_arr;
+    }
+//    zNodes[0].children = init_zTree(rep_data);
+//    var zTreeObj = $.fn.zTree.init($("#control_tree"), setting, zNodes);
+    function get_vi() {
+        node_s="";
+        for (var i = 0; i < all_node_obj.length; i++) {
+            node_s += all_node_obj[i].ip_addr + ',';
+        }
+        $.post(url,
+        {
+            how: "get_vi",
+            node_s: node_s,
+        },
+        function (data,status) {
+            alert(data);
+        },
+        "json"
+        );
+    }
 });

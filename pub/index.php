@@ -162,7 +162,7 @@
     <div id="host_map_content" data-role="content">
         <ul id="host_map_content_ul" data-role="listview">
             <li data-role="list-divider">
-                <fieldset class="ui-grid-c" style="text-align:center">
+                <fieldset class="ui-grid-d" style="text-align:center">
                     <div class="ui-block-a">
                         <label>HOST_NAME</label>
                     </div>
@@ -173,6 +173,9 @@
                         <label>MAC_ADDRESS</label>
                     </div>
                     <div class="ui-block-d">
+                        <label>ROLE</label>
+                    </div>
+                    <div class="ui-block-e">
                         <label>ACTION</label>
                     </div>
                 </fieldset>

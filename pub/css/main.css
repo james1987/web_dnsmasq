@@ -9,5 +9,10 @@
 
 #expand_panel .ui-grid-a .ui-block-a { width: 100% }
 
+#host_map_content_ul .ui-block-a { width: 15% }
+#host_map_content_ul .ui-block-b { width: 15% }
+#host_map_content_ul .ui-block-c { width: 15% }
+#host_map_content_ul .ui-block-d { width: 15% }
+#host_map_content_ul .ui-block-e { width: 30% }
 #button_save_host_map { width: 60%; }
 #button_del_host_map { width: 30%; }

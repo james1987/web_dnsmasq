@@ -5,6 +5,7 @@ class Host_Map {
     var $hostname;
     var $mac_addr;
     var $ip_addr;
+    var $role;
 
     function getMembers() {
         return get_class_vars(__CLASS__);

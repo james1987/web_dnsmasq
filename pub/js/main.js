@@ -93,7 +93,7 @@ $(document).ready(function(){
             HM = HMs[i];
             $("#host_map_content_ul").append('\
                 <li class="ui-li ui-li-static ui-btn-up-c ui-li-last">\
-                    <fieldset class="ui-grid-c">\
+                    <fieldset class="ui-grid-d">\
                         <div class="ui-block-a">\
                             <input type="text" class="ui-disabled" name="input_hostname" id="input_hostname" value="' + HM.hostname + '" placeholder="host_01.domain.com" />\
                         </div>\
@@ -104,6 +104,9 @@ $(document).ready(function(){
                             <input type="text" class="ui-disabled" name="input_mac_addr" id="input_mac_addr" value="' + HM.mac_addr + '" placeholder="00:00:00:AA:AA:01" />\
                         </div>\
                         <div class="ui-block-d">\
+                            <input type="text" class="ui-disabled" name="input_role" id="input_role" value="' + HM.role + '" placeholder="GUEST" />\
+                        </div>\
+                        <div class="ui-block-e">\
                             <a id="button_save_host_map" class="ui-disabled" data-role="button" data-icon="check" data-inline="true" data-theme="b">SAVE</a>\
                             <a id="button_del_host_map" data-role="button" data-icon="delete" data-inline="true" data-theme="a">DEL</a>\
                         </div>\
@@ -114,7 +117,7 @@ $(document).ready(function(){
         if (0 == HMs.length) {
             $("#host_map_content_ul").append('\
                 <li class="ui-li ui-li-static ui-btn-up-c ui-li-last">\
-                    <fieldset class="ui-grid-c">\
+                    <fieldset class="ui-grid-d">\
                         <div class="ui-block-a">\
                             <input type="text" name="input_hostname" id="input_hostname" value="" placeholder="host_01.' + global_info.domain_name + '" />\
                         </div>\
@@ -125,6 +128,9 @@ $(document).ready(function(){
                             <input type="text" name="input_mac_addr" id="input_mac_addr" value="" placeholder="00:00:00:AA:AA:01" />\
                         </div>\
                         <div class="ui-block-d">\
+                            <input type="text" name="input_role" id="input_role" value="" placeholder="GUEST" />\
+                        </div>\
+                        <div class="ui-block-e">\
                             <a id="button_save_host_map" data-role="button" data-icon="check" data-inline="true" data-theme="b">SAVE</a>\
                             <a id="button_del_host_map" data-role="button" data-icon="delete" data-inline="true" data-theme="a">DEL</a>\
                         </div>\
@@ -299,6 +305,7 @@ $(document).ready(function(){
             hostname:$(this).parent().parents().find("input#input_hostname").val(),
             mac_addr:$(this).parent().parents().find("input#input_mac_addr").val(),
             ip_addr:$(this).parent().parents().find("input#input_ip_addr").val(),
+            role:$(this).parent().parents().find("input#input_role").val(),
         },
         function(data,status){
             if ("success" == status) {

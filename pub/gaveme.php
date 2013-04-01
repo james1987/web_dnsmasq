@@ -5,7 +5,7 @@
     header('Access-Control-Allow-Methods: POST, GET');
     header('Content-Type: text/plain');
     $Full_URL = $_SERVER['REQUEST_URI'];
-    $args = array("how","host_s","owner_by");
+    $args = array("how","host_s","owner_by","node_s");
     if (file_exists("/sbin/ifconfig")) {
         exec("/sbin/ifconfig | grep '^[a-z]' | awk '{print $1}'",$net_devs);
     }
@@ -39,16 +39,17 @@
         ${$var} = Null;
         if (isset($_REQUEST[$var])) {
             if ("how" == $var or "owner_by" == $var) {
-                ${$var} = $_REQUEST[$var];
+                ${$var} = rtrim($_REQUEST[$var], ',');
                 continue;
             }
-            ${$var} = explode(",",$_REQUEST[$var]);
+            ${$var} = explode(",",rtrim($_REQUEST[$var], ','));
         }
     }
 
     switch ($how)
     {
         case 'get_gi':
+            $gi_arr = array_merge($gi_arr,array('areas' => get_areas()));
             echo json_encode($gi_arr);
             break;
         case 'get_AIs':
@@ -80,6 +81,20 @@
                 array_push($tmp_DISK_POOL,$DI);
             }
             echo json_encode($tmp_DISK_POOL);
+            break;
+        case 'get_vi':
+            $tmp_NODES = array();
+            if (Null == $node_s) {
+                echo 'You need post node_s parameter';
+                exit;
+            }
+            foreach ($node_s as $node) {
+            #    $NODE = new Node();
+            #    $NODE->getIt($node);
+            #    array_push($tmp_NODES,$NODE);
+                array_push($tmp_NODES,$node);
+            }
+            echo json_encode($tmp_NODES);
             break;
         default:
     }
