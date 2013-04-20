@@ -1,6 +1,7 @@
 $(document).ready(function(){
     var server_ip = window.document.location.host;
     var url="http://" + server_ip + "/gaveme.php";
+    var handle = "handle.php";
     var global_info;
     $.post(url,
     {
@@ -177,7 +178,7 @@ $(document).ready(function(){
             alert("You need set end_IP");
         }
         if (is_ok) {
-            $.post("handle.php",
+            $.post(handle,
             {
                 action:'create',
                 area_name:$("#area_name").val(),
@@ -210,7 +211,7 @@ $(document).ready(function(){
     });
 
     $("#button_delete").click( function() {
-        $.post("handle.php",
+        $.post(handle,
         {
             action:'delete',
             area_name:$("#delete_domain").val(),
@@ -227,7 +228,7 @@ $(document).ready(function(){
 
     $("[id=AI_service]").die().live("slidestop",function() {});
     $("[id=AI_service]").live("slidestop",function() {
-        $.post("handle.php",
+        $.post(handle,
         {
             action:'change',
             area_name:this.name,
@@ -246,7 +247,7 @@ $(document).ready(function(){
 
     $("[id=tftp_enable]").die().live("slidestop",function() {});
     $("[id=tftp_enable]").live("slidestop",function() {
-        $.post("handle.php",
+        $.post(handle,
         {
             action:'change',
             area_name:this.name,
@@ -298,7 +299,7 @@ $(document).ready(function(){
     $("[id=button_save_host_map]").die().live("click",function() {});
     $("[id=button_save_host_map]").live("click",function() {
         cur_but = $(this);
-        $.post("handle.php",
+        $.post(handle,
         {
             action:'add_host_map',
             owner_by:$("#current_domain").val(),
@@ -324,7 +325,7 @@ $(document).ready(function(){
     $("[id=button_del_host_map]").die().live("click",function() {});
     $("[id=button_del_host_map]").live("click",function() {
         cur_but = $(this);
-        $.post("handle.php",
+        $.post(handle,
         {
             action:'delete_host_map',
             host_name:$(this).parent().parents().find("input#input_hostname").val(),

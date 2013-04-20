@@ -17,8 +17,8 @@ a { color:#05a; text-decoration:none;}
 a:hover { color:#f00;}
 
 #layout { margin:0 auto; width:100%;}
-#control_side { float:left; width:10%; height:500px; background:#cc6;}
-#info_panel { float:right; width:90%; height:500px; background:#ddd;}
+#control_side { float:left; width:20%; height:500px; background:#39F;}
+#info_panel { float:right; width:80%; height:500px; background:#ddd;}
 
 #disk_pool_content_ul .ui-block-a { width: 15% }
 #disk_pool_content_ul .ui-block-b { width: 15% }
@@ -27,3 +27,6 @@ a:hover { color:#f00;}
 #disk_pool_content_ul .ui-block-e { width: 30% }
 #button_save_disk_image { width: 60%; }
 #button_del_disk_image { width: 30%; }
+#fun_button_s { margin:0 auto; width:100%; text-align:center; }
+#button_add_dev_panel { width: 60%; }
+#button_remove_dev_panel { width: 30%; }

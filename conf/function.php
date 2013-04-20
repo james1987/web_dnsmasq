@@ -45,6 +45,21 @@ function get_mask($num) {
     }
     return ltrim($mask,'.');
 }
+function pingAddress($ip) {
+    $pingresult = shell_exec("/usr/sbin/fping $ip");
+    $is_alive = "is alive";
+    $deadoralive = strpos($pingresult, $is_alive);
+    if ($deadoralive == false)
+    {
+        return false;
+//        echo "The IP address, $ip, is dead";
+    }
+    else
+    {
+        return true;
+//        echo "The IP address, $ip, is alive";
+    }
+}
 function get_areas() {
     global $conf;
     $l_r = new Redis();

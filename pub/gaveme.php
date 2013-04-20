@@ -89,10 +89,10 @@
                 exit;
             }
             foreach ($node_s as $node) {
-            #    $NODE = new Node();
-            #    $NODE->getIt($node);
-            #    array_push($tmp_NODES,$NODE);
-                array_push($tmp_NODES,$node);
+                $NODE = new Node();
+                $NODE->getIt($node);
+                array_push($tmp_NODES,$NODE);
+            //    array_push($tmp_NODES,$node);
             }
             echo json_encode($tmp_NODES);
             break;
